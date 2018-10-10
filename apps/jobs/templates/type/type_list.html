@@ -1,0 +1,166 @@
+{% extends "base/_base.html" %}
+{% load i18n %}
+{% load static %}
+    {% block content %}
+        <div class="row bg-title">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h4 class="page-title">{% trans 'Job Type' %}</h4>
+            </div>
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+{#                <button class="right-side-toggle waves-effect waves-light btn-info btn-circle pull-right m-l-20"><i class="ti-settings text-white"></i></button>#}
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'index' %}">{% trans 'Dashboard' %}</a></li>
+                    <li class="active">{% trans 'Job Type' %}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{% trans 'Job Type' %}
+                        <div class="panel-action"><a href="#" data-perform="panel-collapse"><i class="ti-minus"></i></a> <a href="#" data-perform="panel-dismiss"><i class="ti-close"></i></a></div>
+                    </div>
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table id="job_type_table" class="table table-striped table-condensed table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">
+                                                <input type="checkbox" id="checkAll" name="checkAll" />
+                                            </th>
+                                            <th class="text-center">{% trans 'Job Name' %}</th>
+                                            <th class="text-center">{% trans 'Comment' %}</th>
+                                            <th class="text-center">{% trans 'Action' %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for job_type in job_type_obj %}
+                                            <tr>
+                                                <td class="text-center">
+                                                    <input type="checkbox" class="checkItem" id="checkItem" name="checkItem" value={{ job_type.id }} />
+                                                </td>
+                                                <td class="text-center">{{ job_type.name }}</td>
+                                                <td class="text-center">{{ job_type.comment }}</td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-info btn-circle" onclick="window.location.href='{% url "jobs:type-update" pk=job_type.id %}'">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-circle job-type-delete" value={{ job_type.id }}>
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block script %}
+        <script>
+            var table = $('#job_type_table').DataTable({
+                "bSort": false,
+                "iDisplayLength": 15,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        text: '<i class="ti-plus"></i>',
+                        titleAttr: 'Create',
+                        className: 'btn-outline',
+                        action: function ( e, dt, node, config ) {
+                            window.location.href = "{% url 'jobs:type-create' %}";
+                        }
+                    },
+                    {
+                        text: '<i class="ti-trash"></i>',
+                        titleAttr: 'Delete',
+                        className: 'btn-outline',
+                        action: function ( e, dt, node, config ) {
+                            var types_id = [];
+                            $('table tbody :checkbox').each(function(){
+                                if(this.checked){
+                                    types_id.push($(this).val())
+                                }
+                            });
+                            swal({
+                                title: "是否批量删除?",
+                                text: "你确定需要批量删除吗？",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonText: "确定",
+                                cancelButtonText: "取消",
+                                closeOnConfirm: false,
+                                html: false,
+                                showLoaderOnConfirm: true
+                            }, function(){
+                                $.ajax({
+                                    type: "POST",
+                                    url: "{% url 'jobs:type-delete' %}",
+                                    data:{
+                                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                                        "types_id[]": types_id
+                                    },
+                                    success:function(arg){
+                                        if (arg === "0") {
+                                            swal("删除成功！", "已经批量删除", "success");
+                                            setTimeout(function(){
+                                                window.location.reload()}, 1200);
+                                        } else {
+                                            var err_msg = "删除失败!";
+                                            swal("删除失败！", err_msg, "error");
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                    },
+                ]
+            });
+
+            table.on('draw.dt', function (event) {
+                initTableiCheck();
+            });
+
+            $(function(){
+                $("body").delegate('#job_type_table .job-type-delete', 'click', function () {
+                    var type_id = $(this).attr("value");
+                    swal({
+                        title: "是否删除?",
+                        text: "你确定需要删除吗？",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "确定",
+                        cancelButtonText: "取消",
+                        closeOnConfirm: false,
+                        html: false,
+                        showLoaderOnConfirm: true
+                    }, function(){
+                        $.ajax({
+                            type: "POST",
+                            url: "{% url 'jobs:type-delete' %}",
+                            data:{
+                                csrfmiddlewaretoken: '{{ csrf_token }}',
+                                "types_id[]": type_id
+                            },
+                            success:function(arg){
+                                if (arg === "0") {
+                                    swal("删除成功！", "该类型已删除", "success");
+                                    setTimeout(function(){
+                                        window.location.reload()}, 1200);
+                                } else {
+                                    var err_msg = "删除失败!";
+                                    swal("删除失败！", err_msg, "error");
+                                }
+                            }
+                        });
+                    });
+                });
+            })
+        </script>
+    {% endblock %}

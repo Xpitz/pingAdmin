@@ -1,0 +1,143 @@
+{% extends "base/_base.html" %}
+{% load bootstrap3 %}
+{% load i18n %}
+{% load static %}
+    {% block content %}
+        <div class="row bg-title">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h4 class="page-title">{% trans 'Asset Detail' %}</h4>
+            </div>
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+{#                <button class="right-side-toggle waves-effect waves-light btn-info btn-circle pull-right m-l-20"><i class="ti-settings text-white"></i></button>#}
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'index' %}">{% trans 'Dashboard' %}</a></li>
+                    <li class="active">{% trans 'Asset Detail' %}</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="white-box p-0">
+                    <!-- .left-right-aside-column-->
+                    <div class="page-aside">
+                        <!-- .left-aside-column-->
+                        <div class="left-aside">
+                            <div class="scrollable">
+                                <ul class="list-style-none m-b-20">
+                                    <li class="box-label"><a href="javascript:void(0)">{% trans 'Basic Info' %}</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="javascript:void(0)">{% trans 'Hostname' %}<span>{{ asset_obj.hostname }}</span></a></li>
+                                    <li><a href="javascript:void(0)">{% trans 'Outer IP' %}<span>{{ asset_obj.outer_ip }}</span></a></li>
+                                    <li><a href="javascript:void(0)">{% trans 'Inner IP' %}<span>{{ asset_obj.inner_ip }}</span></a></li>
+                                    <li><a href="javascript:void(0)">{% trans 'Port' %} <span>{{ asset_obj.port }}</span></a></li>
+                                    <li><a href="javascript:void(0)">{% trans 'Asset Group' %}<span>{{ asset_obj.groups }}</span></a></li>
+                                </ul>
+                                <button type="button" class="btn btn-info btn-block info-collect" value="{{ asset_obj.id }}">{% trans 'Sync' %}</button>
+                            </div>
+                        </div>
+                        <!-- /.left-aside-column-->
+                        <div class="right-aside">
+                            <div class="right-page-header">
+                                <h3>{% trans 'System Info' %}</h3>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="scrollable">
+                                <div class="white-box">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center" width="50%">{% trans 'Item' %}</th>
+                                                    <th class="text-center">{% trans 'Content' %}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center">{% trans 'OS' %}</td>
+                                                    <td class="text-center">{{ asset_obj.os }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">{% trans 'OS Release' %}</td>
+                                                    <td class="text-center">{{ asset_obj.os_release }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">{% trans 'CPU Model' %}</td>
+                                                    <td class="text-center">{{ asset_obj.cpu_model }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center" >{% trans 'CPU Count' %}</td>
+                                                    <td class="text-center">{{ asset_obj.cpu_count }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center" >{% trans 'Memory Total' %} (MB)</td>
+                                                    <td class="text-center">{{ asset_obj.mem_total }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center" >{% trans 'Serial Number' %}</td>
+                                                    <td class="text-center">{{ asset_obj.sn }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- .left-aside-column-->
+                    </div>
+                    <!-- /.left-right-aside-column-->
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    {% endblock %}
+    {% block script %}
+        <script>
+            $sidebar_nav = $('.sidebar-nav');
+            $sidebar_nav.find('a[href="/assets/"]').parent('li').addClass('active');
+            $sidebar_nav.find('a[href="/assets/asset/list/"]').addClass('active');
+
+            $("#groups").selectpicker("val", "{{ asset_obj.groups_id }}");
+            /*(function() {
+                [].slice.call(document.querySelectorAll('.sttabs')).forEach(function(el) {
+                    new CBPFWTabs(el);
+                });
+            })();*/
+            $(function(){
+                $(".info-collect").click(function () {
+                    var asset_id = $(this).attr("value");
+                    swal({
+                        title: "是否同步?",
+                        text: "你确定需要同步吗？",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "确定",
+                        cancelButtonText: "取消",
+                        closeOnConfirm: false,
+                        html: false,
+                        showLoaderOnConfirm: true
+                    }, function(){
+                        $.ajax({
+                            type: "POST",
+                            url: "{% url 'assets:asset-sync' %}",
+                            data:{
+                                csrfmiddlewaretoken: '{{ csrf_token }}',
+                                "assets_id[]": asset_id
+                            },
+                            success:function(arg){
+                                if (arg === "0") {
+                                    swal("同步成功！", "资产信息已同步", "success");
+                                    setTimeout(function(){
+                                        window.location.reload()}, 1200);
+                                } else {
+                                    var err_msg = "同步失败!";
+                                    swal("同步失败！", err_msg, "error");
+                                }
+                            }
+                        });
+                    });
+                });
+            })
+        </script>
+    {% endblock %}

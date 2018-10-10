@@ -1,0 +1,95 @@
+{% extends "base/_base.html" %}
+{% load i18n %}
+{% load static %}
+    {% block content %}
+        <div class="row bg-title">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h4 class="page-title">{% trans 'Task Result' %}</h4>
+            </div>
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+{#                <button class="right-side-toggle waves-effect waves-light btn-info btn-circle pull-right m-l-20"><i class="ti-settings text-white"></i></button>#}
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'index' %}">{% trans 'Dashboard' %}</a></li>
+                    <li class="active">{% trans 'Task Result' %}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{% trans 'Task Result' %}
+                        <div class="panel-action"><a href="#" data-perform="panel-collapse"><i class="ti-minus"></i></a> <a href="#" data-perform="panel-dismiss"><i class="ti-close"></i></a></div>
+                    </div>
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body">
+                            <div class="table table-hover toggle-circle" >
+                                <div class="scrollable">
+                                    <div class="form-inline">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label class="form-inline">Show
+                                                    <select id="foo_show_entries" class="form-control input-sm">
+                                                        <option value="5">5</option>
+                                                        <option value="10">10</option>
+                                                        <option value="15">15</option>
+                                                        <option value="20">20</option>
+                                                    </select> entries
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6 text-right">
+                                                <div class="form-group ">
+                                                    <label>
+                                                        Search: <input id="foo_search" type="text" class="form-control input-sm" autocomplete="off">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="foo_pagination" class="table m-t-30 table-hover contact-list toggle-arrow-tiny" data-limit-navigation="5" data-page-size="5">
+                                        <thead>
+                                            <tr>
+                                                <th>{% trans 'Task ID' %}</th>
+                                                <th width="20%">{% trans 'Status' %}</th>
+                                                <th data-hide="all">{% trans 'Result' %}</th>
+                                                <th>{% trans 'Date Done' %}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for task in task_obj %}
+                                                <tr>
+                                                    <td>
+                                                        <a href="javascript:void(0)">
+{#                                                            <img src="{% static 'images/users/genu.jpg' %}" class="img-circle" /> #}
+                                                            {{ task.task_id }}
+                                                        </a>
+                                                    </td>
+                                                    <td>{{ task.status }}</td>
+                                                    <td>{{ task.result }}</td>
+                                                    <td>{{ task.date_done }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="12">
+                                                    <div class="text-right">
+                                                        <ul class="pagination"> </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block script %}
+        <script>
+
+        </script>
+    {% endblock %}

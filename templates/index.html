@@ -1,0 +1,92 @@
+{% extends "base/_base.html" %}
+{% load i18n %}
+{% load static %}
+    {% block content %}
+        <div class="row bg-title">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h4 class="page-title">{% trans 'Dashboard' %}</h4> </div>
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+{#                <button class="right-side-toggle waves-effect waves-light btn-info btn-circle pull-right m-l-20"><i class="ti-settings text-white"></i></button>#}
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'index' %}">{% trans 'Dashboard' %}</a></li>
+                    <li class="active">{% trans 'Dashboard' %}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="white-box">
+                    <div class="row row-in">
+                        <div class="col-lg-3 col-sm-12 row-in-br">
+                            <ul class="col-in">
+                                <li>
+                                    <span class="circle circle-md bg-danger"><i class="ti-user"></i></span>
+                                </li>
+                                <li class="col-last">
+                                    <h4 class="counter text-right m-t-15"><a href="{% url 'users:user-list' %}">{{ user_obj.count }}</a></h4>
+                                </li>
+                                <li class="col-middle">
+                                    <h4>{% trans 'Users' %}</h4>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 col-sm-12 row-in-br  b-r-none">
+                            <ul class="col-in">
+                                <li>
+                                    <span class="circle circle-md bg-info"><i class="ti-harddrives"></i></span>
+                                </li>
+                                <li class="col-last">
+                                    <h4 class="counter text-right m-t-15"><a href="{% url 'assets:asset-list' %}">{{ asset_obj.count }}</a></h4>
+                                </li>
+                                <li class="col-middle">
+                                    <h4>{% trans 'Assets' %}</h4>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 col-sm-12 row-in-br  b-r-none">
+                            <ul class="col-in">
+                                <li>
+                                    <span class="circle circle-md bg-warning"><i class="ti-clipboard"></i></span>
+                                </li>
+                                <li class="col-last">
+                                    <h4 class="counter text-right m-t-15"><a href="{% url 'jobs:job-list' %}">{{ job_obj.count }}</a></h4>
+                                </li>
+                                <li class="col-middle">
+                                    <h4>{% trans 'Jobs' %}</h4>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 col-sm-12 b-r-none">
+                            <ul class="col-in">
+                                <li>
+                                    <span class="circle circle-md bg-primary"><i class="ti-dropbox-alt"></i></span>
+                                </li>
+                                <li class="col-last">
+                                    <h4 class="counter text-right m-t-15"><a href="{% url 'tasks:task-list' %}">{{ task_obj.count }}</a></h4>
+                                </li>
+                                <li class="col-middle">
+                                    <h4>{% trans 'Tasks' %}</h4>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}

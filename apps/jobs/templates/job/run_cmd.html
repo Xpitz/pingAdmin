@@ -1,0 +1,173 @@
+{% extends "base/_base.html" %}
+{% load i18n %}
+{% load static %}
+    {% block content %}
+        <div class="row bg-title">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h4 class="page-title">{% trans 'Run Command' %}</h4>
+            </div>
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+{#                <button class="right-side-toggle waves-effect waves-light btn-info btn-circle pull-right m-l-20"><i class="ti-settings text-white"></i></button>#}
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'index' %}">{% trans 'Dashboard' %}</a></li>
+                    <li class="active">{% trans 'Run Command' %}</li>
+                </ol>
+            </div>
+        </div>
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="white-box p-0">
+                    <!-- .left-right-aside-column-->
+                    <div class="page-aside">
+                        <!-- .left-aside-column-->
+                        <div class="left-aside">
+                            <div class="scrollable">
+                                <ul class="list-style-none m-b-20">
+                                    <li class="box-label"><a href="javascript:void(0)">{% trans 'Run Command' %}</a></li>
+                                    <li class="divider"></li>
+                                </ul>
+                                <form id="command_form" class="form-horizontal" method="post">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">{% trans 'Assets' %}</label>
+                                        <div class="col-md-8">
+                                            <select id="assets" name="assets[]" class="selectpicker" title="请选择" data-style="form-control" data-live-search="true" data-size="5" multiple required>
+                                              {% for asset in asset_obj %}
+                                                  <option value="{{ asset.hostname }}">{{ asset.hostname }}</option>
+                                              {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">{% trans 'Asset Group' %}</label>
+                                        <div class="col-md-8">
+                                            <select id="groups" name="groups[]" class="selectpicker" title="请选择" data-style="form-control" data-live-search="true" data-size="5" multiple>
+                                              {% for group in asset_group_obj %}
+                                                  <option value="{{ group.id }}">{{ group.name }}</option>
+                                              {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">{% trans 'Module' %}</label>
+                                        <div class="col-md-8">
+                                            <select id="modules" name="modules" class="selectpicker" title="请选择" data-style="form-control" data-live-search="true" data-max-options="1" data-size="5" multiple>
+                                                <option value="cmd.run">cmd.run</option>
+                                                <option value="cmd.script">cmd.script</option>
+                                                <option value="state.sls">state.sls</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="scripts_form_group" class="form-group" hidden>
+                                        <label class="control-label col-md-4">Scripts</label>
+                                        <div class="col-md-8">
+                                            <select id="scripts" name="scripts" class="form-control selectpicker" title="请选择" data-style="form-control" data-live-search="true" data-max-options="1" data-size="5" multiple>
+                                              {% for script in script_obj %}
+                                                  <option value="salt://{{ script.name }}">{{ script.name }}</option>
+                                              {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="sls_form_group" class="form-group" hidden>
+                                        <label class="control-label col-md-4">SLS</label>
+                                        <div class="col-md-8">
+                                            <select id="sls" name="sls" class="selectpicker" title="请选择" data-style="form-control" data-live-search="true" data-max-options="1" data-size="5" multiple>
+                                              {% for sls in sls_obj %}
+                                                  <option value="{{ sls.name }}">{{ sls.name }}</option>
+                                              {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="content_form_group" class="form-group" hidden>
+                                        <label class="control-label col-md-4">{% trans 'Content' %}</label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="content" name="content" class="form-control">
+                                        </div>
+                                    </div>
+                                    <button id="submit" type="button" class="btn btn-info btn-block">{% trans 'Submit' %}</button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /.left-aside-column-->
+                        <div class="right-aside">
+                            <div class="right-page-header">
+                                <h3>{% trans 'Execute Result' %}</h3>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="scrollable">
+                                <textarea id="result" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <!-- .left-aside-column-->
+                    </div>
+                    <!-- /.left-right-aside-column-->
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    {% endblock %}
+
+    {% block script %}
+        <script>
+            var editor = CodeMirror.fromTextArea($("#result")[0], {
+                lineNumbers: true,
+                lineWrapping: true,
+                readOnly: true,
+                theme: 'dracula',
+                mode: 'application/ld+json',
+                {#theme: 'eclipse',#}
+                indentUnit: 2,
+            });
+            var totalLines = editor.lineCount();
+            editor.setSize(null, 450);
+
+            $("#submit").click(function() {
+                $("#command_form").bootstrapValidator('validate');
+                var cf_validator = $("#command_form").data('bootstrapValidator').isValid();
+                if (cf_validator) {
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'jobs:run-cmd' %}",
+                        data: $('#command_form').serialize() + '&csrfmiddlewaretoken={{ csrf_token }}',
+                        success:function(arg){
+                            editor.setValue(arg);
+                            editor.autoFormatRange({line:0, ch:0}, {line:totalLines});
+                        }
+                    });
+                }
+
+            });
+            $("#assets").on('changed.bs.select',function(){
+                if ($("#assets").val() != null){
+
+                    $("#groups").prop('disabled', true);
+
+                } else {
+                    $("#groups").prop('disabled', false);
+                }
+                $("#command_form").data('bootstrapValidator').resetForm();
+                $('#groups').selectpicker('refresh');
+            });
+            $("#groups").on('changed.bs.select',function(){
+                if ($("#groups").val() != null){
+                    $("#assets").prop('disabled', true);
+                } else {
+                    $("#assets").prop('disabled', false);
+                }
+                $("#command_form").data('bootstrapValidator').resetForm();
+                $('#assets').selectpicker('refresh');
+            });
+            $("#modules").on('changed.bs.select',function(e, clickedIndex){
+                if (clickedIndex === 0) {
+                    $('#scripts_form_group, #sls_form_group').hide();
+                    $('#content_form_group').show();
+                } else if (clickedIndex === 1){
+                    $('#content_form_group, #sls_form_group').hide();
+                    $('#scripts_form_group').show();
+                } else {
+                    $('#content_form_group, #scripts_form_group').hide();
+                    $('#sls_form_group').show();
+                }
+            })
+        </script>
+    {% endblock %}

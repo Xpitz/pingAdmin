@@ -1,0 +1,210 @@
+{% extends "base/_base.html" %}
+{% load i18n %}
+{% load static %}
+    {% block content %}
+        <div class="row bg-title">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h4 class="page-title">{% trans 'Job List' %}</h4> </div>
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+{#                <button class="right-side-toggle waves-effect waves-light btn-info btn-circle pull-right m-l-20"><i class="ti-settings text-white"></i></button>#}
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'index' %}">{% trans 'Dashboard' %}</a></li>
+                    <li class="active">{% trans 'Job List' %}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{% trans 'Job List' %}
+                        <div class="panel-action"><a href="#" data-perform="panel-collapse"><i class="ti-minus"></i></a> <a href="#" data-perform="panel-dismiss"><i class="ti-close"></i></a></div>
+                    </div>
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table id="job_table" class="table table-striped table-condensed table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">
+                                                <input type="checkbox" id="checkAll" name="checkAll" />
+                                            </th>
+                                            <th class="text-center">{% trans 'Job Name' %}</th>
+                                            <th class="text-center">{% trans 'Comment' %}</th>
+                                            <th class="text-center">{% trans 'Job Type' %}</th>
+                                            <th class="text-center">{% trans 'Action' %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for job in job_obj %}
+                                            <tr>
+                                                <td class="text-center">
+                                                    <input type="checkbox" class="checkItem" id="checkItem" name="checkItem" value={{ job.id }} />
+                                                </td>
+                                                <td class="text-center">{{ job.name }}</td>
+                                                <td class="text-center">{{ job.comment }}</td>
+                                                <td class="text-center">{{ job.types }}</td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-info btn-circle" onclick="window.location.href='{% url "jobs:job-update" pk=job.id %}'">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-circle job-delete" value={{ job.id }}>
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block script %}
+        <script>
+            var table = $('#job_table').DataTable({
+                "bSort": false,
+                "iDisplayLength": 2,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        text: '<i class="ti-plus"></i>',
+                        titleAttr: 'Create',
+                        className: 'btn-outline',
+                        action: function ( e, dt, node, config ) {
+                            window.location.href = "{% url 'jobs:job-create' %}";
+                        }
+                    },
+                    {
+                        text: '<i class="ti-trash"></i>',
+                        titleAttr: 'Delete',
+                        className: 'btn-outline',
+                        action: function ( e, dt, node, config ) {
+                            var jobs_id = [];
+                            $('table tbody :checkbox').each(function(){
+                                if(this.checked){
+                                    jobs_id.push($(this).val())
+                                }
+                            });
+                            swal({
+                                title: "是否批量删除?",
+                                text: "你确定需要批量删除吗？",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonText: "确定",
+                                cancelButtonText: "取消",
+                                closeOnConfirm: false,
+                                html: false,
+                                showLoaderOnConfirm: true
+                            }, function(){
+                                $.ajax({
+                                    type: "POST",
+                                    url: "{% url 'jobs:job-delete' %}",
+                                    data:{
+                                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                                        "jobs_id[]": jobs_id
+                                    },
+                                    success:function(arg){
+                                        if (arg === "0") {
+                                            swal("删除成功！", "已经批量删除", "success");
+                                            setTimeout(function(){
+                                                window.location.reload()}, 1200);
+                                        } else {
+                                            var err_msg = "删除失败!";
+                                            swal("删除失败！", err_msg, "error");
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                    },
+                    {
+                        text: '<i class="ti-upload"></i>',
+                        titleAttr: 'Push',
+                        className: 'btn-outline',
+                        action: function ( e, dt, node, config ) {
+                            var jobs_id = [];
+                            $('table tbody :checkbox').each(function(){
+                                if(this.checked){
+                                    jobs_id.push($(this).val())
+                                }
+                            });
+                            swal({
+                                title: "是否同步?",
+                                text: "你确定需要同步吗？",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonText: "确定",
+                                cancelButtonText: "取消",
+                                closeOnConfirm: false,
+                                html: false,
+                                showLoaderOnConfirm: true
+                            }, function(){
+                                $.ajax({
+                                    type: "POST",
+                                    url: "{% url 'jobs:job-push' %}",
+                                    data:{
+                                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                                        "jobs_id[]": jobs_id
+                                    },
+                                    success:function(arg){
+                                        if (arg === "0") {
+                                            swal("同步成功！", "脚本已同步", "success");
+                                            setTimeout(function(){
+                                                window.location.reload()}, 1200);
+                                        } else {
+                                            var err_msg = "同步失败!";
+                                            swal("同步失败！", err_msg, "error");
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                    },
+                ]
+            });
+
+            table.on('draw.dt', function (event) {
+                initTableiCheck();
+            });
+
+            $(function(){
+                $("body").delegate('#job_table .job-delete', 'click', function () {
+                    var job_id = [$(this).attr("value")];
+                    swal({
+                        title: "是否删除?",
+                        text: "你确定需要删除吗？",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "确定",
+                        cancelButtonText: "取消",
+                        closeOnConfirm: false,
+                        html: false,
+                        showLoaderOnConfirm: true
+                    }, function(){
+                        $.ajax({
+                            type: "POST",
+                            url: "{% url 'jobs:job-delete' %}",
+                            data:{
+                                csrfmiddlewaretoken: '{{ csrf_token }}',
+                                "jobs_id[]": job_id
+                            },
+                            success:function(arg){
+                                if (arg === "0") {
+                                    swal("删除成功！", "Job已删除", "success");
+                                    setTimeout(function(){
+                                        window.location.reload()}, 1200);
+                                } else {
+                                    var err_msg = "删除失败!";
+                                    swal("删除失败！", err_msg, "error");
+                                }
+                            }
+                        });
+                    });
+                });
+            })
+        </script>
+    {% endblock %}

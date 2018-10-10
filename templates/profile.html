@@ -1,0 +1,162 @@
+{% extends "base/_base.html" %}
+{% load i18n %}
+{% load static %}
+    {% block content %}
+        <div class="row bg-title">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h4 class="page-title">{% trans 'My Profile' %}</h4>
+            </div>
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+{#                <button class="right-side-toggle waves-effect waves-light btn-info btn-circle pull-right m-l-20"><i class="ti-settings text-white"></i></button>#}
+{#                <a href="javascript: void(0);" target="_blank" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Buy Admin Now</a>#}
+                <ol class="breadcrumb">
+                    <li><a href="#">{% trans 'Dashboard' %}</a></li>
+                    <li class="active">{% trans 'My Profile' %}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-xs-12">
+                <div class="white-box">
+                    <div class="user-bg"> <img width="100%" alt="user" src="{% static 'images/profiles/profile.jpg' %}"> </div>
+                    <div class="user-btm-box">
+                        <!-- .row -->
+                        <div class="row text-center m-t-10">
+                            <div class="col-md-6 b-r"><strong>{% trans 'Username' %}</strong>
+                                <p>{{ request.user.username }}</p>
+                            </div>
+                            <div class="col-md-6"><strong>{% trans 'Nickname' %}</strong>
+                                <p>{{ request.user.nickname }}</p>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                        <hr>
+                        <!-- .row -->
+                        <div class="row text-center m-t-10">
+                            <div class="col-md-6 b-r"><strong>{% trans 'Email' %}</strong>
+                                <p>{{ request.user.email }}</p>
+                            </div>
+                            <div class="col-md-6"><strong>{% trans 'Status' %}</strong>
+                                {% if request.user.is_active %}
+                                    <p>Active</p>
+                                {% else %}
+                                    <p>Disabled</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                        <hr>
+                        <!-- .row -->
+                        <div class="row text-center m-t-10">
+                            <div class="col-md-12"><strong>{% trans 'Comment' %}</strong>
+                                <p>{{ request.user.comment }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- /.row -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 col-xs-12">
+                <div class="white-box">
+                    <!-- .tabs -->
+                    <ul class="nav nav-tabs tabs customtab">
+                        <li class="active tab">
+                            <a href="#profile" data-toggle="tab"> <span class="visible-xs"><i class="fa fa-home"></i></span> <span class="hidden-xs">Edit Detail</span> </a>
+                        </li>
+                    </ul>
+                    <!-- /.tabs -->
+                    <div class="tab-content">
+                        <!-- .tabs 1 -->
+                        <div class="tab-pane active" id="profile">
+                            <div class="tab-pane" id="settings">
+                                <form id="profile_form" class="form-horizontal form-material">
+                                    <div class="form-group">
+                                        <label class="col-md-12">{% trans 'Username' %}</label>
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control form-control-line" name="username" value="{{ request.user.username }}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">{% trans 'Nickname' %}</label>
+                                        <div class="col-md-12">
+                                            <input type="text" class="form-control form-control-line" name="nickname" value="{{ request.user.nickname }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-email" class="col-md-12">{% trans 'Email' %}</label>
+                                        <div class="col-md-12">
+                                            <input type="email" class="form-control form-control-line" name="email" value="{{ request.user.email }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">{% trans 'Old Password' %}</label>
+                                        <div class="col-md-12">
+                                            <input type="password" name="password" class="form-control form-control-line">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">{% trans 'New Password' %}</label>
+                                        <div class="col-md-12">
+                                            <input type="password" name="new-password" class="form-control form-control-line"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">{% trans 'Confirm Password' %}</label>
+                                        <div class="col-md-12">
+                                            <input type="password" name="confirm-password" class="form-control form-control-line">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-12">{% trans 'Comment' %}</label>
+                                        <div class="col-md-12">
+                                            <textarea rows="5" name="comment" class="form-control form-control-line">{{ request.user.comment }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-3 col-sm-push-9">
+                                            <button type="button" id="update" class="btn btn-info">{% trans 'Update Profile' %}</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /.tabs1 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block script %}
+        <script>
+            $("#update").click(function() {
+                swal({
+                    title: "是否更新?",
+                    text: "你确定需要更新吗？",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "确定",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false,
+                    html: false,
+                    showLoaderOnConfirm: true
+                }, function(){
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'profile' %}",
+                        data: $('#profile_form').serialize() + '&is_active={{ request.user.is_active }}' + '&csrfmiddlewaretoken={{ csrf_token }}',
+                        success:function(arg){
+                            if (arg === "0") {
+                                swal("更新成功！", "档案已更新", "success");
+                                setTimeout(function(){
+                                    window.location.reload()}, 1200);
+                            } else {
+                                var err_msg = "更新失败!";
+                                swal("更新失败！", err_msg, "error");
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+    {% endblock %}

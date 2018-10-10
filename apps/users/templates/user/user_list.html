@@ -1,0 +1,151 @@
+{% extends "base/_base.html" %}
+{% load i18n %}
+{% load static %}
+    {% block content %}
+        <div class="row bg-title">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h4 class="page-title">{% trans 'User List' %}</h4> </div>
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+{#                <button class="right-side-toggle waves-effect waves-light btn-info btn-circle pull-right m-l-20"><i class="ti-settings text-white"></i></button>#}
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'index' %}">{% trans 'Dashboard' %}</a></li>
+                    <li class="active">{% trans 'User List' %}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{% trans 'User List' %}
+                        <div class="panel-action"><a href="#" data-perform="panel-collapse"><i class="ti-minus"></i></a> <a href="#" data-perform="panel-dismiss"><i class="ti-close"></i></a></div>
+                    </div>
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body">
+                            <div class="scrollable">
+                                <div class="table table-hover toggle-circle" >
+                                    <div class="form-inline">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label class="form-inline">Show
+                                                    <select id="foo_show_entries" class="form-control input-sm">
+                                                        <option value="5">5</option>
+                                                        <option value="10">10</option>
+                                                        <option value="15">15</option>
+                                                        <option value="20">20</option>
+                                                    </select> entries
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6 text-right">
+                                                <div class="form-group ">
+                                                    <label>
+                                                        Search: <input id="foo_search" type="text" class="form-control input-sm" autocomplete="off">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table id="foo_pagination" class="table m-t-30 table-hover contact-list toggle-arrow-tiny" data-limit-navigation="5" data-page-size="5">
+                                        <thead>
+                                            <tr>
+                                                <th>{% trans 'Username' %}</th>
+                                                <th>{% trans 'Nickname' %}</th>
+                                                <th>{% trans 'Email' %}</th>
+                                                <th>{% trans 'Active' %}</th>
+                                                <th data-hide="all">{% trans 'Comment' %}</th>
+                                                <th data-hide="all">{% trans 'Role Group' %}</th>
+                                                <th>{% trans 'Last Login' %}</th>
+                                                <th>{% trans 'Action' %}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for user in user_obj %}
+                                                <tr>
+                                                    <td>
+                                                        <a href="javascript:void(0)">
+{#                                                            <img src="{% static 'images/users/genu.jpg' %}" class="img-circle" /> #}
+                                                            {{ user.username }}
+                                                        </a>
+                                                    </td>
+                                                    <td>{{ user.nickname }}</td>
+                                                    <td>{{ user.email }}</td>
+                                                    {% if user.is_active %}
+                                                        <td><i class="mdi mdi-check-circle text-info"></i></td>
+                                                    {% else %}
+                                                        <td><i class="mdi mdi-close-circle text-danger"></i></td>
+                                                    {% endif %}
+                                                    <td>{{ user.comment }}</td>
+                                                    <td>
+                                                        {% for role in user.groups.all %}
+                                                            {{ role.name }}
+                                                            <br>
+                                                         {% endfor %}
+                                                    </td>
+                                                    <td>{{ user.last_login }}</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline btn-update" data-toggle="tooltip" data-original-title="Update" data-trigger="hover" onclick="window.location.href='{% url "users:user-update" pk=user.id %}'"><i class="ti-pencil-alt" aria-hidden="true"></i></button>
+                                                        <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline btn-delete" data-toggle="tooltip" data-trigger="hover" data-original-title="Delete" value={{ user.id }}><i class="ti-close" aria-hidden="true"></i></button>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <button type="button" class="btn btn-info btn-rounded" onclick="window.location.href='{% url "users:user-create" %}'">{% trans 'Create User' %}</button>
+                                                </td>
+                                                <td colspan="7">
+                                                    <div class="text-right">
+                                                        <ul class="pagination"> </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block script %}
+        <script>
+            $(function(){
+                $("#foo_pagination").on('click', '.btn-delete', function () {
+                    var user_id = $(this).attr("value");
+                    swal({
+                        title: "是否删除?",
+                        text: "你确定需要删除吗？",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "确定",
+                        cancelButtonText: "取消",
+                        closeOnConfirm: false,
+                        html: false,
+                        showLoaderOnConfirm: true
+                    }, function(){
+                        $.ajax({
+                            type: "POST",
+                            url: "{% url 'users:user-delete' %}",
+                            data:{
+                                csrfmiddlewaretoken: '{{ csrf_token }}',
+                                "user_id": user_id
+                            },
+                            success:function(arg){
+                                if (arg === "0") {
+                                    swal("删除成功！", "用户已删除", "success");
+                                    setTimeout(function(){
+                                        window.location.reload()}, 1200);
+                                } else {
+                                    var err_msg = "删除失败!";
+                                    swal("删除失败！", err_msg, "error");
+                                }
+                            }
+                        });
+                    });
+                });
+            })
+        </script>
+    {% endblock %}

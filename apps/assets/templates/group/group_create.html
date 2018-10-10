@@ -1,0 +1,58 @@
+{% extends "base/_base.html" %}
+{% load bootstrap3 %}
+{% load i18n %}
+{% load static %}
+    {% block content %}
+        <div class="row bg-title">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h4 class="page-title">{% trans 'Create Asset Group' %}</h4>
+            </div>
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+{#                <button class="right-side-toggle waves-effect waves-light btn-info btn-circle pull-right m-l-20"><i class="ti-settings text-white"></i></button>#}
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'index' %}">{% trans 'Dashboard' %}</a></li>
+                    <li class="active">{% trans 'Create Asset Group' %}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{% trans 'Create Asset Group' %}
+                        <div class="panel-action"><a href="#" data-perform="panel-collapse"><i class="ti-minus"></i></a> <a href="#" data-perform="panel-dismiss"><i class="ti-close"></i></a></div>
+                    </div>
+                    <div class="panel-wrapper collapse in" aria-expanded="true">
+                        <div class="panel-body">
+                            <form class="form-horizontal form-bordered" method="post">
+                                {% csrf_token %}
+                                <div class="form-body">
+                                    {% bootstrap_field form.name layout="horizontal" horizontal_field_class="col-md-7" placeholder="" %}
+                                    {% bootstrap_field form.comment layout="horizontal" horizontal_field_class="col-md-7" placeholder="" %}
+                                </div>
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-3 col-md-offset-8">
+                                                    <button id="submit" class="btn btn-info">{% trans 'Submit' %}</button>
+                                                    <a href="{% url 'assets:group-list' %}" class="btn btn-info btn-outline">{% trans 'Cancel' %}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block script %}
+        <script>
+            $sidebar_nav = $('.sidebar-nav');
+            $sidebar_nav.find('a[href="/assets/"]').parent('li').addClass('active');
+            $sidebar_nav.find('a[href="/assets/group/list/"]').addClass('active');
+        </script>
+    {% endblock %}

@@ -1,0 +1,665 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-10-07 09:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .\apps\assets\models.py:8 .\apps\assets\templates\group\group_list.html:31
+msgid "Asset Group Name"
+msgstr "资产组名"
+
+#: .\apps\assets\models.py:9 .\apps\assets\templates\group\group_list.html:32
+#: .\apps\jobs\models.py:9 .\apps\jobs\models.py:23
+#: .\apps\jobs\templates\job\job_list.html:32
+#: .\apps\jobs\templates\type\type_list.html:33 .\apps\users\models.py:55
+#: .\apps\users\templates\user\user_list.html:54 .\templates\profile.html:51
+#: .\templates\profile.html:110
+msgid "Comment"
+msgstr "备注"
+
+#: .\apps\assets\models.py:13 .\apps\assets\models.py:14
+#: .\apps\assets\models.py:28
+#: .\apps\assets\templates\asset\asset_create.html:33
+#: .\apps\assets\templates\asset\asset_detail.html:35
+#: .\apps\assets\templates\asset\asset_list.html:106
+#: .\apps\assets\templates\asset\asset_list.html:176
+#: .\apps\assets\templates\asset\asset_update.html:33
+#: .\apps\assets\templates\group\group_list.html:7
+#: .\apps\assets\templates\group\group_list.html:12
+#: .\apps\assets\templates\group\group_list.html:19
+#: .\apps\jobs\templates\job\run_cmd.html:42 .\templates\base\_base.html:73
+#: .\templates\base\_base.html:155
+msgid "Asset Group"
+msgstr "资产组"
+
+#: .\apps\assets\models.py:22
+#: .\apps\assets\templates\asset\asset_detail.html:31
+#: .\apps\assets\templates\asset\asset_list.html:94
+#: .\apps\assets\templates\asset\asset_list.html:173
+msgid "Hostname"
+msgstr "主机名"
+
+#: .\apps\assets\models.py:23
+#: .\apps\assets\templates\asset\asset_detail.html:32
+#: .\apps\assets\templates\asset\asset_list.html:98
+#: .\apps\assets\templates\asset\asset_list.html:174
+msgid "Outer IP"
+msgstr "外网IP"
+
+#: .\apps\assets\models.py:24
+#: .\apps\assets\templates\asset\asset_detail.html:33
+#: .\apps\assets\templates\asset\asset_list.html:102
+#: .\apps\assets\templates\asset\asset_list.html:175
+msgid "Inner IP"
+msgstr "内网IP"
+
+#: .\apps\assets\models.py:25
+#: .\apps\assets\templates\asset\asset_detail.html:34
+msgid "Port"
+msgstr "端口"
+
+#: .\apps\assets\models.py:26 .\apps\users\models.py:50
+#: .\apps\users\templates\user\user_list.html:50 .\templates\profile.html:25
+#: .\templates\profile.html:75
+msgid "Username"
+msgstr "用户名"
+
+#: .\apps\assets\models.py:27
+#: .\apps\assets\templates\asset\asset_update.html:44
+msgid "Auth Password"
+msgstr "认证密码"
+
+#: .\apps\assets\models.py:30
+#: .\apps\assets\templates\asset\asset_detail.html:58
+#: .\apps\assets\templates\asset\asset_list.html:112
+msgid "OS"
+msgstr "操作系统"
+
+#: .\apps\assets\models.py:31
+#: .\apps\assets\templates\asset\asset_detail.html:62
+#: .\apps\assets\templates\asset\asset_list.html:116
+msgid "OS Release"
+msgstr "系统版本"
+
+#: .\apps\assets\models.py:32
+#: .\apps\assets\templates\asset\asset_detail.html:66
+#: .\apps\assets\templates\asset\asset_list.html:120
+msgid "CPU Model"
+msgstr "CPU型号"
+
+#: .\apps\assets\models.py:33
+#: .\apps\assets\templates\asset\asset_detail.html:70
+#: .\apps\assets\templates\asset\asset_list.html:124
+msgid "CPU Count"
+msgstr "CPU数量"
+
+#: .\apps\assets\models.py:34
+#: .\apps\assets\templates\asset\asset_detail.html:74
+#: .\apps\assets\templates\asset\asset_list.html:128
+msgid "Memory Total"
+msgstr "总内存"
+
+#: .\apps\assets\models.py:35
+#: .\apps\assets\templates\asset\asset_detail.html:78
+#: .\apps\assets\templates\asset\asset_list.html:132
+msgid "Serial Number"
+msgstr "序列号"
+
+#: .\apps\assets\models.py:39 .\apps\assets\models.py:40
+msgid "Asset Info"
+msgstr "资产信息"
+
+#: .\apps\assets\templates\asset\asset_create.html:8
+#: .\apps\assets\templates\asset\asset_create.html:13
+#: .\apps\assets\templates\asset\asset_create.html:20
+msgid "Create Asset"
+msgstr "创建资产"
+
+#: .\apps\assets\templates\asset\asset_create.html:12
+#: .\apps\assets\templates\asset\asset_detail.html:13
+#: .\apps\assets\templates\asset\asset_list.html:12
+#: .\apps\assets\templates\asset\asset_update.html:12
+#: .\apps\assets\templates\group\group_create.html:13
+#: .\apps\assets\templates\group\group_list.html:11
+#: .\apps\assets\templates\group\group_update.html:12
+#: .\apps\jobs\templates\job\job_create.html:12
+#: .\apps\jobs\templates\job\job_list.html:11
+#: .\apps\jobs\templates\job\job_update.html:13
+#: .\apps\jobs\templates\job\run_cmd.html:12
+#: .\apps\jobs\templates\type\type_create.html:13
+#: .\apps\jobs\templates\type\type_list.html:12
+#: .\apps\jobs\templates\type\type_update.html:13
+#: .\apps\tasks\templates\crontab\crontab_create.html:13
+#: .\apps\tasks\templates\crontab\crontab_list.html:12
+#: .\apps\tasks\templates\crontab\crontab_update.html:13
+#: .\apps\tasks\templates\interval\interval_create.html:13
+#: .\apps\tasks\templates\interval\interval_list.html:12
+#: .\apps\tasks\templates\interval\interval_update.html:13
+#: .\apps\tasks\templates\task\task_create.html:13
+#: .\apps\tasks\templates\task\task_list.html:12
+#: .\apps\tasks\templates\task\task_result_list.html:12
+#: .\apps\tasks\templates\task\task_update.html:13
+#: .\apps\users\templates\role\role_create.html:11
+#: .\apps\users\templates\role\role_list.html:11
+#: .\apps\users\templates\role\role_update.html:11
+#: .\apps\users\templates\user\user_create.html:12
+#: .\apps\users\templates\user\user_list.html:11
+#: .\apps\users\templates\user\user_update.html:12
+#: .\templates\base\_base.html:145 .\templates\index.html:7
+#: .\templates\index.html:11 .\templates\index.html:12
+#: .\templates\profile.html:13
+msgid "Dashboard"
+msgstr "控制面板"
+
+#: .\apps\assets\templates\asset\asset_create.html:50
+#: .\apps\assets\templates\asset\asset_list.html:34
+#: .\apps\assets\templates\asset\asset_list.html:151
+#: .\apps\assets\templates\asset\asset_update.html:61
+#: .\apps\assets\templates\group\group_create.html:37
+#: .\apps\assets\templates\group\group_update.html:36
+#: .\apps\jobs\templates\job\job_create.html:38
+#: .\apps\jobs\templates\job\job_update.html:39
+#: .\apps\jobs\templates\job\run_cmd.html:87
+#: .\apps\jobs\templates\type\type_create.html:37
+#: .\apps\jobs\templates\type\type_update.html:37
+#: .\apps\tasks\templates\crontab\crontab_create.html:40
+#: .\apps\tasks\templates\crontab\crontab_update.html:40
+#: .\apps\tasks\templates\interval\interval_create.html:37
+#: .\apps\tasks\templates\interval\interval_update.html:37
+#: .\apps\tasks\templates\task\task_create.html:62
+#: .\apps\tasks\templates\task\task_update.html:66
+#: .\apps\users\templates\role\role_create.html:64
+#: .\apps\users\templates\role\role_update.html:69
+#: .\apps\users\templates\user\user_create.html:61
+#: .\apps\users\templates\user\user_update.html:69
+msgid "Submit"
+msgstr "提交"
+
+#: .\apps\assets\templates\asset\asset_create.html:51
+#: .\apps\assets\templates\asset\asset_list.html:35
+#: .\apps\assets\templates\asset\asset_list.html:152
+#: .\apps\assets\templates\asset\asset_update.html:62
+#: .\apps\assets\templates\group\group_create.html:38
+#: .\apps\assets\templates\group\group_update.html:37
+#: .\apps\jobs\templates\job\job_create.html:39
+#: .\apps\jobs\templates\job\job_update.html:40
+#: .\apps\jobs\templates\type\type_create.html:38
+#: .\apps\jobs\templates\type\type_update.html:38
+#: .\apps\tasks\templates\crontab\crontab_create.html:41
+#: .\apps\tasks\templates\crontab\crontab_update.html:41
+#: .\apps\tasks\templates\interval\interval_create.html:38
+#: .\apps\tasks\templates\interval\interval_update.html:38
+#: .\apps\tasks\templates\task\task_create.html:63
+#: .\apps\tasks\templates\task\task_update.html:67
+#: .\apps\users\templates\role\role_create.html:65
+#: .\apps\users\templates\role\role_update.html:70
+#: .\apps\users\templates\user\user_create.html:62
+#: .\apps\users\templates\user\user_update.html:70
+msgid "Cancel"
+msgstr "取消"
+
+#: .\apps\assets\templates\asset\asset_detail.html:8
+#: .\apps\assets\templates\asset\asset_detail.html:14
+msgid "Asset Detail"
+msgstr "资产详情"
+
+#: .\apps\assets\templates\asset\asset_detail.html:29
+msgid "Basic Info"
+msgstr "基本信息"
+
+#: .\apps\assets\templates\asset\asset_detail.html:37
+msgid "Sync"
+msgstr "同步"
+
+#: .\apps\assets\templates\asset\asset_detail.html:43
+msgid "System Info"
+msgstr "系统信息"
+
+#: .\apps\assets\templates\asset\asset_detail.html:52
+msgid "Item"
+msgstr "项目"
+
+#: .\apps\assets\templates\asset\asset_detail.html:53 .\apps\jobs\models.py:22
+#: .\apps\jobs\templates\job\run_cmd.html:82
+msgid "Content"
+msgstr "内容"
+
+#: .\apps\assets\templates\asset\asset_list.html:7
+#: .\apps\assets\templates\asset\asset_list.html:13
+#: .\apps\assets\templates\asset\asset_list.html:161
+#: .\templates\base\_base.html:72 .\templates\base\_base.html:154
+msgid "Asset List"
+msgstr "资产列表"
+
+#: .\apps\assets\templates\asset\asset_list.html:24
+msgid "Import Asset Info"
+msgstr "导入资产信息"
+
+#: .\apps\assets\templates\asset\asset_list.html:48
+msgid "Export Asset Info"
+msgstr "导出资产信息"
+
+#: .\apps\assets\templates\asset\asset_list.html:61
+msgid "Select Asset Group"
+msgstr "选择资产组"
+
+#: .\apps\assets\templates\asset\asset_list.html:71
+msgid "Export Scope"
+msgstr "导出范围"
+
+#: .\apps\assets\templates\asset\asset_list.html:75
+msgid "Export All"
+msgstr "导出所有"
+
+#: .\apps\assets\templates\asset\asset_list.html:79
+msgid "Export Selected"
+msgstr "导出所选"
+
+#: .\apps\assets\templates\asset\asset_list.html:84
+msgid "Select Columns to Export"
+msgstr "选择导出列"
+
+#: .\apps\assets\templates\asset\asset_list.html:90
+msgid "Asset ID"
+msgstr "资产ID"
+
+#: .\apps\assets\templates\asset\asset_list.html:136
+msgid "Columns Setting"
+msgstr "列设置"
+
+#: .\apps\assets\templates\asset\asset_list.html:140
+msgid "Select All"
+msgstr "全选"
+
+#: .\apps\assets\templates\asset\asset_list.html:144
+msgid "Deselect All"
+msgstr "全不选"
+
+#: .\apps\assets\templates\asset\asset_list.html:177
+#: .\apps\assets\templates\group\group_list.html:33
+#: .\apps\jobs\templates\job\job_list.html:34
+#: .\apps\jobs\templates\type\type_list.html:34
+#: .\apps\tasks\templates\task\task_list.html:57
+#: .\apps\users\templates\role\role_list.html:55
+#: .\apps\users\templates\user\user_list.html:57
+msgid "Action"
+msgstr "操作"
+
+#: .\apps\assets\templates\asset\asset_update.html:8
+#: .\apps\assets\templates\asset\asset_update.html:13
+#: .\apps\assets\templates\asset\asset_update.html:20
+msgid "Update Asset"
+msgstr "更新资产"
+
+#: .\apps\assets\templates\group\group_create.html:8
+#: .\apps\assets\templates\group\group_create.html:14
+#: .\apps\assets\templates\group\group_create.html:21
+msgid "Create Asset Group"
+msgstr "创建资产组"
+
+#: .\apps\assets\templates\group\group_update.html:8
+#: .\apps\assets\templates\group\group_update.html:13
+#: .\apps\assets\templates\group\group_update.html:20
+msgid "Update Asset Group"
+msgstr "更新资产组"
+
+#: .\apps\jobs\models.py:8
+msgid "Job Type Name"
+msgstr "作业类型名"
+
+#: .\apps\jobs\models.py:13 .\apps\jobs\models.py:14 .\apps\jobs\models.py:24
+#: .\apps\jobs\templates\job\job_list.html:33
+#: .\apps\jobs\templates\type\type_list.html:7
+#: .\apps\jobs\templates\type\type_list.html:13
+#: .\apps\jobs\templates\type\type_list.html:20 .\templates\base\_base.html:81
+#: .\templates\base\_base.html:162
+msgid "Job Type"
+msgstr "作业类型"
+
+#: .\apps\jobs\models.py:21 .\apps\jobs\templates\job\job_list.html:31
+#: .\apps\jobs\templates\type\type_list.html:32
+msgid "Job Name"
+msgstr "作业名"
+
+#: .\apps\jobs\models.py:28 .\apps\jobs\models.py:29
+msgid "Job Info"
+msgstr "作业信息"
+
+#: .\apps\jobs\templates\job\job_create.html:8
+#: .\apps\jobs\templates\job\job_create.html:13
+#: .\apps\jobs\templates\job\job_create.html:20
+msgid "Create Job"
+msgstr "创建作业"
+
+#: .\apps\jobs\templates\job\job_list.html:7
+#: .\apps\jobs\templates\job\job_list.html:12
+#: .\apps\jobs\templates\job\job_list.html:19 .\templates\base\_base.html:80
+#: .\templates\base\_base.html:161
+msgid "Job List"
+msgstr "作业列表"
+
+#: .\apps\jobs\templates\job\job_update.html:8
+#: .\apps\jobs\templates\job\job_update.html:14
+#: .\apps\jobs\templates\job\job_update.html:21
+msgid "Update Job"
+msgstr "更新作业"
+
+#: .\apps\jobs\templates\job\run_cmd.html:7
+#: .\apps\jobs\templates\job\run_cmd.html:13
+#: .\apps\jobs\templates\job\run_cmd.html:27 .\templates\base\_base.html:79
+#: .\templates\base\_base.html:160
+msgid "Run Command"
+msgstr "执行命令"
+
+#: .\apps\jobs\templates\job\run_cmd.html:32 .\templates\index.html:46
+msgid "Assets"
+msgstr "资产"
+
+#: .\apps\jobs\templates\job\run_cmd.html:52
+msgid "Module"
+msgstr "模块"
+
+#: .\apps\jobs\templates\job\run_cmd.html:94
+msgid "Execute Result"
+msgstr "执行结果"
+
+#: .\apps\jobs\templates\type\type_create.html:8
+#: .\apps\jobs\templates\type\type_create.html:14
+#: .\apps\jobs\templates\type\type_create.html:21
+msgid "Create Job Type"
+msgstr "创建作业类型"
+
+#: .\apps\jobs\templates\type\type_update.html:8
+#: .\apps\jobs\templates\type\type_update.html:14
+#: .\apps\jobs\templates\type\type_update.html:21
+msgid "Update Job Type"
+msgstr "更新作业类型"
+
+#: .\apps\tasks\templates\crontab\crontab_create.html:8
+#: .\apps\tasks\templates\crontab\crontab_create.html:14
+#: .\apps\tasks\templates\crontab\crontab_create.html:21
+msgid "Create Crontab"
+msgstr "创建Crontab"
+
+#: .\apps\tasks\templates\crontab\crontab_list.html:7
+#: .\apps\tasks\templates\crontab\crontab_list.html:13
+#: .\apps\tasks\templates\crontab\crontab_list.html:20
+#: .\templates\base\_base.html:88 .\templates\base\_base.html:168
+msgid "Crontab List"
+msgstr "Crontab列表"
+
+#: .\apps\tasks\templates\crontab\crontab_update.html:8
+#: .\apps\tasks\templates\crontab\crontab_update.html:14
+#: .\apps\tasks\templates\crontab\crontab_update.html:21
+msgid "Update Crontab"
+msgstr "更新Crontab"
+
+#: .\apps\tasks\templates\interval\interval_create.html:8
+#: .\apps\tasks\templates\interval\interval_create.html:14
+#: .\apps\tasks\templates\interval\interval_create.html:21
+msgid "Create Interval"
+msgstr "创建Interval"
+
+#: .\apps\tasks\templates\interval\interval_list.html:7
+#: .\apps\tasks\templates\interval\interval_list.html:13
+#: .\apps\tasks\templates\interval\interval_list.html:20
+#: .\templates\base\_base.html:89 .\templates\base\_base.html:169
+msgid "Interval List"
+msgstr "Interval列表"
+
+#: .\apps\tasks\templates\interval\interval_update.html:8
+#: .\apps\tasks\templates\interval\interval_update.html:14
+#: .\apps\tasks\templates\interval\interval_update.html:21
+msgid "Update Interval"
+msgstr "更新Interval"
+
+#: .\apps\tasks\templates\task\task_create.html:8
+#: .\apps\tasks\templates\task\task_create.html:14
+#: .\apps\tasks\templates\task\task_create.html:21
+#: .\apps\tasks\templates\task\task_list.html:87
+msgid "Create Task"
+msgstr "创建任务"
+
+#: .\apps\tasks\templates\task\task_create.html:31
+#: .\apps\tasks\templates\task\task_list.html:52
+#: .\apps\tasks\templates\task\task_update.html:31
+msgid "Task"
+msgstr "任务"
+
+#: .\apps\tasks\templates\task\task_create.html:41
+#: .\apps\tasks\templates\task\task_list.html:56
+#: .\apps\tasks\templates\task\task_update.html:41
+msgid "Enabled"
+msgstr "是否可用"
+
+#: .\apps\tasks\templates\task\task_create.html:49
+#: .\apps\tasks\templates\task\task_list.html:53
+#: .\apps\tasks\templates\task\task_update.html:53
+msgid "Expires"
+msgstr "过期时间"
+
+#: .\apps\tasks\templates\task\task_list.html:7
+#: .\apps\tasks\templates\task\task_list.html:13
+#: .\apps\tasks\templates\task\task_list.html:20 .\templates\base\_base.html:87
+#: .\templates\base\_base.html:167
+msgid "Periodic Tasks"
+msgstr "周期任务"
+
+#: .\apps\tasks\templates\task\task_list.html:51
+msgid "Task Name"
+msgstr "任务名"
+
+#: .\apps\tasks\templates\task\task_list.html:54
+msgid "Args"
+msgstr "参数"
+
+#: .\apps\tasks\templates\task\task_list.html:55
+msgid "Kwargs"
+msgstr "关键字参数"
+
+#: .\apps\tasks\templates\task\task_result_list.html:7
+#: .\apps\tasks\templates\task\task_result_list.html:13
+#: .\apps\tasks\templates\task\task_result_list.html:20
+#: .\templates\base\_base.html:90 .\templates\base\_base.html:170
+msgid "Task Result"
+msgstr "任务结果"
+
+#: .\apps\tasks\templates\task\task_result_list.html:51
+msgid "Task ID"
+msgstr "任务ID"
+
+#: .\apps\tasks\templates\task\task_result_list.html:52
+#: .\templates\profile.html:39
+msgid "Status"
+msgstr "状态"
+
+#: .\apps\tasks\templates\task\task_result_list.html:53
+msgid "Result"
+msgstr "结果"
+
+#: .\apps\tasks\templates\task\task_result_list.html:54
+msgid "Date Done"
+msgstr "完成日期"
+
+#: .\apps\tasks\templates\task\task_update.html:8
+#: .\apps\tasks\templates\task\task_update.html:14
+#: .\apps\tasks\templates\task\task_update.html:21
+msgid "Update Task"
+msgstr "更新任务"
+
+#: .\apps\users\forms.py:26
+msgid "Password"
+msgstr "密码"
+
+#: .\apps\users\models.py:51 .\apps\users\templates\user\user_list.html:51
+#: .\templates\profile.html:28 .\templates\profile.html:81
+msgid "Nickname"
+msgstr "昵称"
+
+#: .\apps\users\models.py:52 .\apps\users\templates\user\user_list.html:52
+#: .\templates\profile.html:36 .\templates\profile.html:87
+msgid "Email"
+msgstr "邮箱"
+
+#: .\apps\users\models.py:53 .\apps\users\templates\user\user_create.html:41
+#: .\apps\users\templates\user\user_list.html:53
+#: .\apps\users\templates\user\user_update.html:41
+msgid "Active"
+msgstr "是否可用"
+
+#: .\apps\users\models.py:54 .\apps\users\templates\user\user_create.html:47
+#: .\apps\users\templates\user\user_update.html:51
+msgid "Superuser"
+msgstr "超级用户"
+
+#: .\apps\users\models.py:64 .\apps\users\models.py:65
+msgid "User Profile"
+msgstr "用户档案"
+
+#: .\apps\users\templates\role\role_create.html:7
+#: .\apps\users\templates\role\role_create.html:12
+#: .\apps\users\templates\role\role_create.html:19
+#: .\apps\users\templates\role\role_list.html:90
+msgid "Create User Role"
+msgstr "创建用户角色"
+
+#: .\apps\users\templates\role\role_create.html:23
+#: .\apps\users\templates\role\role_list.html:50
+#: .\apps\users\templates\role\role_update.html:23
+msgid "Role Name"
+msgstr "角色名"
+
+#: .\apps\users\templates\role\role_create.html:31
+#: .\apps\users\templates\role\role_update.html:31
+msgid "Permissions Available"
+msgstr "可用权限"
+
+#: .\apps\users\templates\role\role_create.html:53
+#: .\apps\users\templates\role\role_update.html:53
+msgid "Permissions Selected"
+msgstr "已选权限"
+
+#: .\apps\users\templates\role\role_list.html:7
+#: .\apps\users\templates\role\role_list.html:12
+#: .\apps\users\templates\role\role_list.html:19 .\templates\base\_base.html:66
+#: .\templates\base\_base.html:149
+msgid "User Role"
+msgstr "用户角色"
+
+#: .\apps\users\templates\role\role_list.html:51
+msgid "Auth User Count"
+msgstr "授权用户数量"
+
+#: .\apps\users\templates\role\role_list.html:52
+msgid "Permission Count"
+msgstr "权限数量"
+
+#: .\apps\users\templates\role\role_list.html:53
+msgid "Auth User"
+msgstr "授权用户"
+
+#: .\apps\users\templates\role\role_list.html:54
+msgid "Permission"
+msgstr "权限"
+
+#: .\apps\users\templates\role\role_update.html:7
+#: .\apps\users\templates\role\role_update.html:12
+#: .\apps\users\templates\role\role_update.html:19
+msgid "Update User Role"
+msgstr "更新用户角色"
+
+#: .\apps\users\templates\user\user_create.html:8
+#: .\apps\users\templates\user\user_create.html:13
+#: .\apps\users\templates\user\user_create.html:20
+#: .\apps\users\templates\user\user_list.html:94
+msgid "Create User"
+msgstr "创建用户"
+
+#: .\apps\users\templates\user\user_create.html:31
+#: .\apps\users\templates\user\user_list.html:55
+#: .\apps\users\templates\user\user_update.html:31
+msgid "Role Group"
+msgstr "角色组"
+
+#: .\apps\users\templates\user\user_list.html:7
+#: .\apps\users\templates\user\user_list.html:12
+#: .\apps\users\templates\user\user_list.html:19 .\templates\base\_base.html:65
+#: .\templates\base\_base.html:148
+msgid "User List"
+msgstr "用户列表"
+
+#: .\apps\users\templates\user\user_list.html:56
+msgid "Last Login"
+msgstr "最后登录"
+
+#: .\apps\users\templates\user\user_update.html:8
+#: .\apps\users\templates\user\user_update.html:13
+#: .\apps\users\templates\user\user_update.html:20
+msgid "Update User"
+msgstr "更新用户"
+
+#: .\templates\base\_base.html:64 .\templates\base\_base.html:146
+msgid "User Center"
+msgstr "用户中心"
+
+#: .\templates\base\_base.html:71 .\templates\base\_base.html:152
+msgid "Asset Management"
+msgstr "资产管理"
+
+#: .\templates\base\_base.html:78 .\templates\base\_base.html:158
+msgid "Job Scheduling"
+msgstr "作业调度"
+
+#: .\templates\base\_base.html:86 .\templates\base\_base.html:165
+msgid "Task Arrangement"
+msgstr "任务编排"
+
+#: .\templates\base\_base.html:141 .\templates\profile.html:7
+#: .\templates\profile.html:14
+msgid "My Profile"
+msgstr "我的档案"
+
+#: .\templates\base\_base.html:142
+msgid "Log Out"
+msgstr "登出"
+
+#: .\templates\index.html:29
+msgid "Users"
+msgstr "用户"
+
+#: .\templates\index.html:63
+msgid "Jobs"
+msgstr "作业"
+
+#: .\templates\index.html:80
+msgid "Tasks"
+msgstr "任务"
+
+#: .\templates\profile.html:93
+msgid "Old Password"
+msgstr "旧的密码"
+
+#: .\templates\profile.html:99
+msgid "New Password"
+msgstr "新的密码"
+
+#: .\templates\profile.html:104
+msgid "Confirm Password"
+msgstr "确认密码"
+
+#: .\templates\profile.html:117
+msgid "Update Profile"
+msgstr "更新档案"

@@ -1,0 +1,93 @@
+{% extends "base/_base.html" %}
+{% load i18n %}
+{% load static %}
+    {% block content %}
+        <div class="row bg-title">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h4 class="page-title">{% trans 'Update User Role' %}</h4> </div>
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+{#                <button class="right-side-toggle waves-effect waves-light btn-info btn-circle pull-right m-l-20"><i class="ti-settings text-white"></i></button>#}
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'index' %}">{% trans 'Dashboard' %}</a></li>
+                    <li class="active">{% trans 'Update User Role' %}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="white-box">
+                    <h3 class="box-title m-b-30">{% trans 'Update User Role' %}</h3>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group form-horizontal col-md-12 col-md-pull-1">
+                            <label class="col-sm-2 control-label" >{% trans 'Role Name' %}</label>
+                            <div class="col-xs-4">
+                                <input type="text" class="form-control" name="role_name" value="{{ role_obj.name }}" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">{% trans 'Permissions Available' %}</div>
+                                    <div class="panel-wrapper collapse in">
+                                        <select name="from[]" id="undo_redo" class="form-control" size="13" multiple="multiple">
+                                            {% for perm in permission_obj %}
+                                                <option value={{ perm.id }}>{{ perm.content_type.app_label }} | {{ perm.content_type }} | {{ perm.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-2">
+                                <button type="button" id="undo_redo_undo" class="btn btn-primary btn-block"><i class="fa fa-reply"></i></button>
+                                <button type="button" id="undo_redo_rightAll" class="btn btn-default btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+                                <button type="button" id="undo_redo_rightSelected" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                                <button type="button" id="undo_redo_leftSelected" class="btn btn-default btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                                <button type="button" id="undo_redo_leftAll" class="btn btn-default btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+                                <button type="button" id="undo_redo_redo" class="btn btn-warning btn-block"><i class="fa fa-share"></i></button>
+                            </div>
+
+                            <div class="col-xs-5">
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading">{% trans 'Permissions Selected' %}</div>
+                                    <div class="panel-wrapper collapse in">
+                                        <select name="to[]" id="undo_redo_to" class="form-control" size="13" multiple="multiple">
+                                            {% for perm in role_obj.permissions.all %}
+                                                <option value={{ perm.id }}>{{ perm.content_type.app_label }} | {{ perm.content_type }} | {{ perm.name }}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-4 col-md-offset-9">
+                                                <button id="submit" class="btn btn-info">{% trans 'Submit' %}</button>
+                                                <a href="{% url 'users:role-list' %}" class="btn btn-info btn-outline">{% trans 'Cancel' %}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block script %}
+        <script>
+            $sidebar_nav = $('.sidebar-nav');
+            $sidebar_nav.find('a[href="/users/"]').parent('li').addClass('active');
+            $sidebar_nav.find('a[href="/users/role/list/"]').addClass('active');
+
+            $(document).ready(function() {
+               $('#undo_redo').multiselect();
+            });
+        </script>
+    {% endblock %}

@@ -1,0 +1,406 @@
+{% extends "base/_base.html" %}
+{% load i18n %}
+{% load static %}
+    {% block content %}
+        <div class="row bg-title">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h4 class="page-title">{% trans 'Asset List' %}</h4>
+            </div>
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+{#                <button class="right-side-toggle waves-effect waves-light btn-info btn-circle pull-right m-l-20"><i class="ti-settings text-white"></i></button>#}
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'index' %}">{% trans 'Dashboard' %}</a></li>
+                    <li class="active">{% trans 'Asset List' %}</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="modal fade" id="assetImportModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">{% trans 'Import Asset Info' %}</h4>
+                            </div>
+                            <form class="asset-import-form" method="post" enctype="multipart/form-data" action="{% url 'assets:asset-import' %}">
+                                <div class="modal-body clearfix">
+                                    {% csrf_token %}
+                                    <div class="white-box m-b-0">
+                                        <input type="file" name="file" id="id_file" multiple="multiple" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-info" type="submit">{% trans 'Submit' %}</button>
+                                    <button data-dismiss="modal" class="btn btn-info btn-outline" type="button">{% trans 'Cancel' %}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="assetExportModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">{% trans 'Export Asset Info' %}</h4>
+                            </div>
+                            <form class="asset-export-form" method="get" action="{% url 'assets:asset-export' %}">
+                                <div class="modal-body clearfix">
+                                    {% csrf_token %}
+                                    <div class="white-box">
+                                        <div class="form-group col-md-6">
+                                            <!-- 接受勾选资产ID -->
+                                            <div hidden>
+                                                <label>
+                                                    <input class="form-control asset-id" type="text" name="assetId" readonly>
+                                                </label>
+                                            </div>
+                                            <label ><b>{% trans 'Select Asset Group' %}:</b></label>
+                                            <div>
+                                                <label style="margin: 10px">
+                                                    <select name="groupIdList" class="form-control selectpicker" multiple required>
+                                                        {% for group in asset_group_obj %}
+                                                            <option value="{{ group.id }}">{{ group.name }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </label>
+                                            </div>
+                                            <label style="margin-top: 5%"><b>{% trans 'Export Scope' %}:</b></label>
+                                            <div class="container">
+                                                <div class="radio radio-info">
+                                                    <input type="radio" name="exportScope" id="radio_all" value="all" checked>
+                                                    <label for="radio_all">{% trans 'Export All' %}</label>
+                                                </div>
+                                                <div class="radio radio-info">
+                                                    <input type="radio" name="exportScope" id="radio_part" value="part">
+                                                    <label for="radio_part">{% trans 'Export Selected' %}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label><b>{% trans 'Select Columns to Export' %}:</b></label>
+                                            <!-- 资产ID必须显示 -->
+                                            <div class="container">
+                                                <div class="col-xs-2">
+                                                    <div class="checkbox checkbox-info">
+                                                        <input id="id" type="checkbox" name="id" onclick="return false;" checked>
+                                                        <label for="id">{% trans 'Asset ID' %}</label>
+                                                    </div>
+                                                    <div class="checkbox checkbox-info">
+                                                        <input id="hostname" type="checkbox" name="hostname" checked>
+                                                        <label for="hostname">{% trans 'Hostname' %}</label>
+                                                    </div>
+                                                    <div class="checkbox checkbox-info">
+                                                        <input id="outer_ip" type="checkbox" name="outer_ip" checked>
+                                                        <label for="outer_ip">{% trans 'Outer IP' %}</label>
+                                                    </div>
+                                                    <div class="checkbox checkbox-info">
+                                                        <input id="inner_ip" type="checkbox" name="inner_ip" checked>
+                                                        <label for="inner_ip">{% trans 'Inner IP' %}</label>
+                                                    </div>
+                                                    <div class="checkbox checkbox-info">
+                                                        <input id="groups" type="checkbox" name="groups" checked>
+                                                        <label for="groups">{% trans 'Asset Group' %}</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-2">
+                                                    <div class="checkbox checkbox-info">
+                                                        <input id="os" type="checkbox" name="os" checked>
+                                                        <label for="os">{% trans 'OS' %}</label>
+                                                    </div>
+                                                    <div class="checkbox checkbox-info">
+                                                        <input id="os_release" type="checkbox" name="os_release" checked>
+                                                        <label for="os_release">{% trans 'OS Release' %}</label>
+                                                    </div>
+                                                    <div class="checkbox checkbox-info">
+                                                        <input id="cpu_model" type="checkbox" name="cpu_model" checked>
+                                                        <label for="cpu_model">{% trans 'CPU Model' %}</label>
+                                                    </div>
+                                                    <div class="checkbox checkbox-info">
+                                                        <input id="cpu_count" type="checkbox" name="cpu_count" checked>
+                                                        <label for="cpu_count">{% trans 'CPU Count' %}</label>
+                                                    </div>
+                                                    <div class="checkbox checkbox-info">
+                                                        <input id="mem_total" type="checkbox" name="mem_total" checked>
+                                                        <label for="mem_total">{% trans 'Memory Total' %}</label>
+                                                    </div>
+                                                    <div class="checkbox checkbox-info">
+                                                        <input id="sn" type="checkbox" name="sn" checked>
+                                                        <label for="sn">{% trans 'Serial Number' %}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label style="margin-top: 5%"><b>{% trans 'Columns Setting' %}:</b></label>
+                                            <div class="container">
+                                                <div class="radio radio-info">
+                                                    <input type="radio" name="columnsSetting" id="radio_select_all" value="all" checked>
+                                                    <label for="radio_select_all">{% trans 'Select All' %}</label>
+                                                </div>
+                                                <div class="radio radio-info">
+                                                    <input type="radio" name="columnsSetting" id="radio_select_none" value="part">
+                                                    <label for="radio_select_none">{% trans 'Deselect All' %}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-info" type="submit">{% trans 'Submit' %}</button>
+                                    <button data-dismiss="modal" class="btn btn-info btn-outline" type="button">{% trans 'Cancel' %}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{% trans 'Asset List' %}
+                        <div class="panel-action"><a href="#" data-perform="panel-collapse"><i class="ti-minus"></i></a> <a href="#" data-perform="panel-dismiss"><i class="ti-close"></i></a></div>
+                    </div>
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table id="asset_table" class="table table-striped table-condensed table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">
+                                                <input type="checkbox" id="checkAll" name="checkAll" />
+                                            </th>
+                                            <th class="text-center">{% trans 'Hostname' %}</th>
+                                            <th class="text-center">{% trans 'Outer IP' %}</th>
+                                            <th class="text-center">{% trans 'Inner IP' %}</th>
+                                            <th class="text-center">{% trans 'Asset Group' %}</th>
+                                            <th class="text-center">{% trans 'Action' %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for asset in asset_obj %}
+                                            <tr>
+                                                <td class="text-center">
+                                                    <input type="checkbox" class="checkItem" id="checkItem" name="checkItem" value={{ asset.id }} />
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="{% url 'assets:asset-detail' pk=asset.id %}">{{ asset.hostname }}</a>
+                                                </td>
+                                                <td class="text-center">{{ asset.outer_ip }}</td>
+                                                <td class="text-center">{{ asset.inner_ip }}</td>
+                                                <td class="text-center">{{ asset.groups.name }}</td>
+                                                <td class="text-center">
+        {#                                            <button type="button" class="btn btn-primary btn-circle"><i class="fa fa-list"></i> </button>#}
+                                                    <button type="button" class="btn btn-info btn-circle" onclick="window.location.href='{% url "assets:asset-update" pk=asset.id %}'">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </button>
+        {#                                            <button type="button" class="btn btn-warning btn-circle"><i class="fa fa-times"></i> </button>#}
+                                                    <button type="button" class="btn btn-danger btn-circle asset-delete" value={{ asset.id }}>
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block script %}
+        <script>
+            var table = $('#asset_table').DataTable({
+                "bSort": false,
+                "iDisplayLength": 1,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        text: '<i class="ti-plus"></i>',
+                        titleAttr: 'Create',
+                        className: 'btn-outline',
+                        action: function ( e, dt, node, config ) {
+                            window.location.href = "{% url 'assets:asset-create' %}";
+                        }
+                    },
+                    {
+                        text: '<i class="ti-reload"></i>',
+                        titleAttr: 'Sync',
+                        className: 'btn-outline',
+                        action: function ( e, dt, node, config ) {
+                            var assets_id = [];
+                            $('table tbody :checkbox').each(function(){
+                                if(this.checked){
+                                    assets_id.push($(this).val())
+                                }
+                            });
+                            swal({
+                                title: "是否同步?",
+                                text: "你确定需要同步吗？",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonText: "确定",
+                                cancelButtonText: "取消",
+                                closeOnConfirm: false,
+                                html: false,
+                                showLoaderOnConfirm: true
+                            }, function(){
+                                $.ajax({
+                                    type: "POST",
+                                    url: "{% url 'assets:asset-sync' %}",
+                                    data:{
+                                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                                        "assets_id[]": assets_id
+                                    },
+                                    success:function(arg){
+                                        if (arg === "0") {
+                                            swal("同步成功！", "资产已同步", "success");
+                                            setTimeout(function(){
+                                                window.location.reload()}, 1200);
+                                        } else {
+                                            var err_msg = "同步失败!";
+                                            swal("同步失败！", err_msg, "error");
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                    },
+                    {
+                        text: '<i class="ti-trash"></i>',
+                        titleAttr: 'Delete',
+                        className: 'btn-outline',
+                        action: function ( e, dt, node, config ) {
+                            var assets_id = [];
+                            $('table tbody :checkbox').each(function(){
+                                if(this.checked){
+                                    assets_id.push($(this).val())
+                                }
+                            });
+                            swal({
+                                title: "是否批量删除?",
+                                text: "你确定需要批量删除吗？",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonText: "确定",
+                                cancelButtonText: "取消",
+                                closeOnConfirm: false,
+                                html: false,
+                                showLoaderOnConfirm: true
+                            }, function(){
+                                $.ajax({
+                                    type: "POST",
+                                    url: "{% url 'assets:asset-delete' %}",
+                                    data:{
+                                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                                        "assets_id[]": assets_id
+                                    },
+                                    success:function(arg){
+                                        if (arg === "0") {
+                                            swal("删除成功！", "已经批量删除", "success");
+                                            setTimeout(function(){
+                                                window.location.reload()}, 1200);
+                                        } else {
+                                            var err_msg = "删除失败!";
+                                            swal("删除失败！", err_msg, "error");
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                    },
+                    {
+                        text: '<i class="icon-cloud-upload"></i>',
+                        titleAttr: 'Import',
+                        className: 'btn-outline',
+                        action: function ( e, dt, node, config ) {
+                            $("#assetImportModal").modal();
+                        }
+                    },
+                    {
+                        text: '<i class="ti-download"></i>',
+                        titleAttr: 'Export',
+                        className: 'batch-export btn-outline',
+                        action: function ( e, dt, node, config ) {
+                            $("#assetExportModal").modal();
+                        }
+                    },
+                ]
+            });
+
+            table.on('draw.dt', function (event) {
+                initTableiCheck();
+            });
+
+            $(function(){
+                $("body").delegate('#asset_table .asset-delete', 'click', function () {
+                    var asset_id = [$(this).attr("value")];
+                    swal({
+                        title: "是否删除?",
+                        text: "你确定需要删除吗？",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "确定",
+                        cancelButtonText: "取消",
+                        closeOnConfirm: false,
+                        html: false,
+                        showLoaderOnConfirm: true
+                    }, function(){
+                        $.ajax({
+                            type: "POST",
+                            url: "{% url 'assets:asset-delete' %}",
+                            data:{
+                                csrfmiddlewaretoken: '{{ csrf_token }}',
+                                "assets_id[]": asset_id
+                            },
+                            success:function(arg){
+                                if (arg === "0") {
+                                    swal("删除成功！", "资产已删除", "success");
+                                    setTimeout(function(){
+                                        window.location.reload()}, 1200);
+                                } else {
+                                    var err_msg = "删除失败!";
+                                    swal("删除失败！", err_msg, "error");
+                                }
+                            }
+                        });
+                    });
+                });
+
+                $('.selectpicker').selectpicker({
+                    'liveSearch': true,
+                    'actionsBox': true,
+                    'size': 5,
+                    'width': 'auto',
+                    'noneSelectedText': '请选择',
+                    'deselectAllText': '全不选',
+                    'selectAllText': '全选'
+                });
+
+                $(".batch-export").click(function(){
+                    var assets_id = [];
+                    $('table tbody :checkbox').each(function(){
+                        if(this.checked){
+                            assets_id.push($(this).val())
+                        }
+                    });
+                    $(".asset-id").val(assets_id);
+                });
+
+                $('#radio_select_all').click(function(){
+                    $("input[type='checkbox']:checkbox").each(function() {
+		                $(this).prop("checked", true);
+		            });
+                });
+
+                $('#radio_select_none').click(function(){
+                    $("input[type='checkbox']:checkbox").not("input[name=\"id\"]:checkbox").each(function() {
+		                $(this).prop("checked", false);
+		            });
+                });
+            })
+        </script>
+    {% endblock %}
