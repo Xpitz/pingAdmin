@@ -23,7 +23,7 @@
  以上项目请自行安装。
  
 ### 安装模块
- `pip install requirements.txt`
+ `pip install -r requirements.txt`
  
 ### 生成数据
  ```
